@@ -123,6 +123,11 @@ U_f_total_balloon3<-2* u_f_total_balloon3
 f_total_balloon3<-m_exp*g-constant*(d_exp^2)*(h_exp^2)/(t_exp^2)
 print(paste0('The 95% Uncertainty Interval of balloon 3 (d=30cm): ', f_total_balloon3,'±', U_f_total_balloon3,' (N)'))
 
+# we now calculate the relative uncertainty
+print(paste0('The 95% Relative Uncertainty of balloon 1 (d=25cm): ', U_f_total_balloon1/f_total_balloon1*100,' (%)'))
+print(paste0('The 95% Relative Uncertainty of balloon 2 (d=28cm): ', U_f_total_balloon2/f_total_balloon2*100,' (%)'))
+print(paste0('The 95% Relative Uncertainty of balloon 3 (d=30cm): ', U_f_total_balloon3/f_total_balloon3*100,' (%)'))
+
 ### Monte Carlo Method ###
 print('---------------------------------------------------------------------------------------------')
 print('Using Monte Carlo Approach')
@@ -138,8 +143,8 @@ MC_f_total_balloon1<- m_mc*g-constant*(h_mc^2)*(d_mc^2)/(t_mc)^2
 Pmin<- (1-P)/2
 Pmax<- (1+P)/2
 MC_f_total_balloon1_UI<-quantile(MC_f_total_balloon1,probs=c(Pmin,Pmax))
-bar<- (as.numeric(MC_f_total_balloon1_UI[1])+as.numeric(MC_f_total_balloon1_UI[2]))/2
-u<- bar-as.numeric(MC_f_total_balloon1_UI[1])
+bar1<- (as.numeric(MC_f_total_balloon1_UI[1])+as.numeric(MC_f_total_balloon1_UI[2]))/2
+u1<- bar1-as.numeric(MC_f_total_balloon1_UI[1])
 print(paste0('The 95% Uncertainty Interval of balloon 1 (d=25cm): ',bar,'±', u,' (N)'))
 
 # for balloon 2, standard uncertainty of the force is
@@ -153,8 +158,8 @@ MC_f_total_balloon2<- m_mc*g-constant*(h_mc^2)*(d_mc^2)/(t_mc)^2
 Pmin<- (1-P)/2
 Pmax<- (1+P)/2
 MC_f_total_balloon2_UI<-quantile(MC_f_total_balloon2,probs=c(Pmin,Pmax))
-bar<- (as.numeric(MC_f_total_balloon2_UI[1])+as.numeric(MC_f_total_balloon2_UI[2]))/2
-u<- bar-as.numeric(MC_f_total_balloon2_UI[1])
+bar2<- (as.numeric(MC_f_total_balloon2_UI[1])+as.numeric(MC_f_total_balloon2_UI[2]))/2
+u2<- bar2-as.numeric(MC_f_total_balloon2_UI[1])
 print(paste0('The 95% Uncertainty Interval of balloon 2 (d=28cm): ',bar,'±', u,' (N)'))
 
 # for balloon 3, standard uncertainty of the force is
@@ -168,10 +173,14 @@ MC_f_total_balloon3<- m_mc*g-constant*(h_mc^2)*(d_mc^2)/(t_mc)^2
 Pmin<- (1-P)/2
 Pmax<- (1+P)/2
 MC_f_total_balloon3_UI<-quantile(MC_f_total_balloon3,probs=c(Pmin,Pmax))
-bar<- (as.numeric(MC_f_total_balloon3_UI[1])+as.numeric(MC_f_total_balloon3_UI[2]))/2
-u<- bar-as.numeric(MC_f_total_balloon3_UI[1])
+bar3<- (as.numeric(MC_f_total_balloon3_UI[1])+as.numeric(MC_f_total_balloon3_UI[2]))/2
+u3<- bar3-as.numeric(MC_f_total_balloon3_UI[1])
 print(paste0('The 95% Uncertainty Interval of balloon 3 (d=30cm): ',bar,'±', u,' (N)'))
 
+# we now calculate the relative uncertainty
+print(paste0('The 95% Relative Uncertainty of balloon 1 (d=25cm): ', u1/bar1*100,' (%)'))
+print(paste0('The 95% Relative Uncertainty of balloon 2 (d=28cm): ', u2/bar2*100,' (%)'))
+print(paste0('The 95% Relative Uncertainty of balloon 3 (d=30cm): ', u3/bar3*100,' (%)'))
 #####Balance Check with the law of conservation#####
 print('---------------------------------------------------------------------------------------------')
 print('Balance Check')
@@ -187,7 +196,7 @@ Theoretical_balloon2<- 0.0025*(2*4.405)/(t_balloon2)^2
 abs_balloon2<- abs(Theoretical_balloon2-f_total_balloon2)
 print(paste0('for balloon2, abs(F_theorectical-F_experiment), ',abs_balloon2))
 print(paste0('for balloon2, expanded uncertainty, ', U_f_total_balloon2))
-if (abs_ballon2<U_f_total_balloon2){print('The total force of the balloon 2 is conserved')}else{print('The total force of the balloon 2 is not conserved')}
+if (abs_balloon2<U_f_total_balloon2){print('The total force of the balloon 2 is conserved')}else{print('The total force of the balloon 2 is not conserved')}
 print('')
 # for balloon 3
 Theoretical_balloon3<- 0.003*(2*4.405)/(t_balloon3)^2
